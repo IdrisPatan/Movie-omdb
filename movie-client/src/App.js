@@ -19,7 +19,10 @@ class App extends Component {
     render() {
     return (
       <div className="App">
-          TEST!
+          <h1>Movie Search</h1>
+          <div>
+              <input type="text" id="searchBox" />
+          </div>
       </div>
     );
   }
