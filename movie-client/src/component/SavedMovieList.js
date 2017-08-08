@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import '../App.css';
 
-class SavedMovieContianer extends Component {
+class SavedMovieList extends Component {
 
     render() {
         return (
@@ -15,4 +14,4 @@ class SavedMovieContianer extends Component {
     }
 }
 
-export default SavedMovieContianer;
+export default SavedMovieList;
