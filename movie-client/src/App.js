@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import SearchBox from "./SeachBox";
+import SearchMovieContainer from "./SearchMovieContainer";
+import SavedMovieContianer from "./SavedMovieContianer";
 
 
 
@@ -21,7 +23,11 @@ class App extends Component {
       <div className="App">
           <h1>Movie Search</h1>
           <div>
-              <input type="text" id="searchBox" />
+              <SearchBox/>
+          </div>
+          <div>
+              <SearchMovieContainer />
+              <SavedMovieContianer/>
           </div>
       </div>
     );
