@@ -21,12 +21,11 @@ class App extends Component {
         fetch (`http://www.omdbapi.com/?apikey=c5a8df09&s=${name}`)
             .then(response => response.json())
             .then(response => {
-                this.setState({searchedMoviesList: response.Search})
+                this.setState({searchedMoviesList: response.Search, searchField: ''})
 
             })
     }
-
-
+    
     render() {
     return (
       <div className="App">
@@ -35,10 +34,11 @@ class App extends Component {
               <input
                   type="text"
                   name="searchField"
+                  value={this.state.searchField}
                   onChange={(event) => this.setState({searchField: event.target.value})}
               />
               <button id="searchButton" onClick={ () => this.getMoviesOmdb(this.state.searchField)} >Search</button>
-              <button id="clearButton" >Clear</button>
+              <button id="clearButton" onClick={ () => this.setState({searchedMoviesList: []})}>Clear</button>
           </div>
           <div>
               <SearchedMovieList moviesData={this.state.searchedMoviesList}/>
@@ -48,5 +48,4 @@ class App extends Component {
     );
   }
 }
-
 export default App;
