@@ -1,14 +1,10 @@
 package com.movies.movieapp.movieMVC;
-
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.HttpStatus.ACCEPTED;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/")
 

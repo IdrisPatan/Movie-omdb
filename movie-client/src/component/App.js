@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import '../App.css';
 import SearchedMovieList from "./SearchedMovieList";
 import SavedMovieList from "./SavedMovieList";
+import SearchBox from "./SearchBox"
+import Axios from "axios";
 
 
+const API_KEY = "c5a8df09&s";
+const OMDB_BASE_URL = 'http://www.omdbapi.com/?apikey=' + API_KEY + '=';
+const SPRING_API_ENDPOINT = "http://localhost:8080/";
 
 class App extends Component {
 
@@ -12,40 +17,67 @@ class App extends Component {
 
         this.state = {
             searchField: "",
-            searchedMoviesList: []
-        }
+            searchedMoviesList: [],
+            savedMoviesList: []
+        };
+
+        this.getMoviesOmdb = this.getMoviesOmdb.bind(this);
+        this.clearSearchedMovieList = this.clearSearchedMovieList.bind(this);
+        this.onInputChange = this.onInputChange.bind(this);
+        this.onSave = this.onSave.bind(this);
     }
 
-    getMoviesOmdb (name){
-        // get movies
-        fetch (`http://www.omdbapi.com/?apikey=c5a8df09&s=${name}`)
+    onInputChange(event){
+        this.setState({
+            searchField: event.target.value
+        })
+    }
+
+    getMoviesOmdb(){
+        const searchURL = OMDB_BASE_URL + this.state.searchField
+
+        fetch(searchURL)
             .then(response => response.json())
             .then(response => {
                 this.setState({searchedMoviesList: response.Search, searchField: ''})
 
             })
     }
-    
+
+    clearSearchedMovieList(){
+        this.setState({
+            searchedMoviesList : [],
+            searchField : ''
+        })
+    }
+
+
+    onSave(movieToSave) {
+        Axios.post(SPRING_API_ENDPOINT, {
+            title: movieToSave.Title,
+            year: movieToSave.Year,
+            posterUrl: movieToSave.Poster})
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
+    }
+
+
+    onList() {
+
+    }
+
+
     render() {
-    return (
-      <div className="App">
-          <h1>Movie Search</h1>
-          <div>
-              <input
-                  type="text"
-                  name="searchField"
-                  value={this.state.searchField}
-                  onChange={(event) => this.setState({searchField: event.target.value})}
-              />
-              <button id="searchButton" onClick={ () => this.getMoviesOmdb(this.state.searchField)} >Search</button>
-              <button id="clearButton" onClick={ () => this.setState({searchedMoviesList: []})}>Clear</button>
+        return (
+          <div className="App">
+              <h1>Movie Database Explorer</h1>
+              <SearchBox getMovies = {this.getMoviesOmdb} clearMovies={this.clearSearchedMovieList} onChange={this.onInputChange}/>
+              <SearchedMovieList moviesData={this.state.searchedMoviesList} onSave = {this.onSave}/>
+              <SavedMovieList saveMovie={this.onSave} savedMovies = {this.state.savedMoviesList}/>
           </div>
-          <div>
-              <SearchedMovieList moviesData={this.state.searchedMoviesList}/>
-              <SavedMovieList/>
-          </div>
-      </div>
-    );
-  }
+        );
+    }
 }
+
+
 export default App;

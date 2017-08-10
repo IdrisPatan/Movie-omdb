@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../App.css';
 
-class Movie extends Component {
 
-    render() {
+
+
+const Movie = (props) => {
         return (
-            <div className="searchMovieElement">
-                <p>{this.props.movie.Title}</p>
-                <p>{this.props.movie.Year}</p>
-                <img alt="movie poster" src={this.props.movie.Poster} height="50px"/>
-                <button>Add</button>
-            </div>
+        <div  className="searchMovieElement">
+            <p>{props.searchMovie.Title}</p>
+            <p>{props.searchMovie.Year}</p>
+            <img alt="movie poster" src={props.searchMovie.Poster} height="50px"/>
+            <button onClick = {() => props.saveMovie(props.searchMovie)}>Save</button>
+        </div>
         );
-    }
-}
-
+};
 export default Movie;
+

@@ -1,31 +1,54 @@
-// import React, { Component } from 'react';
-// import '../App.css';
-//
-// class SearchBox extends Component {
-//
-//     constructor(props) {
-//         super(props)
-//         this.state = {
-//             searchField: ""
-//         }
-//     }
-//
-//
-//     render() {
-//         return (
-//             <div className="searchBox">
-//                 <div>
-//                     <input
-//                         type="text"
-//                         name="searchField"
-//                         onChange={(event) => this.setState({searchField: event.target.value})}
-//                     />
-//                     <button id="searchButton" onClick={ () => this.props.getMovies("batman")} >Search</button>
-//                     <button id="clearButton" >Clear</button>
-//                 </div>
-//             </div>
-//         );
-//     }
-// }
-//
-// export default SearchBox;
+import React from 'react';
+import '../App.css';
+
+
+const SearchBox = (props) => {
+
+    return (
+        <div>
+            <h1>Movie Search</h1>
+            <input type="text" name="searchField" onChange={props.onChange}/>
+            <button id="searchButton" onClick={props.getMovies}>Search</button>
+            <button id="clearButton" onClick={props.clearMovies}>Clear</button>
+        </div>
+    )
+};
+
+export default SearchBox;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
