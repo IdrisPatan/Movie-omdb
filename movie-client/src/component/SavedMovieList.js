@@ -17,8 +17,8 @@ const SavedMovieList = (props) => {
             <h1>Saved Movies</h1>
             {props.savedMovies.map(film => {
                 return (
-                    <div key={film.id}>
-                        <Movie movie={film} movieClickAction = {()=> console.log("need to implement delete functionality")} />
+                    <div key={film.Id}>
+                        <Movie movie={film} movieClickAction={props.deleteMovie} buttonText="Delete" />
                     </div>
                 )
             })}

@@ -83,12 +83,19 @@ public class MovieAppApplicationTests {
     @Test
     public void deleteMovieChecksIfMovieIsInRepo () throws Exception {
 
-        doNothing().when(movieRepository).delete(any(Integer.class));
+//        doNothing().when(movieRepository).delete(any(Integer.class));
 
+        when(movieRepository.findOne(0)).thenReturn(new Movie ());
         mockMvc.perform(
-                delete("/0"));
+                delete("/0"))
+                .andExpect(status().isAccepted());
 
+        verify(movieRepository).delete(0);
         verify(movieRepository).findOne(0);
         verifyNoMoreInteractions(movieRepository);
     }
+
+    @Test
+    public void
+
 }

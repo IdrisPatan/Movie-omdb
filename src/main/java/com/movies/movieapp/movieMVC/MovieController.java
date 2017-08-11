@@ -37,8 +37,10 @@ public class MovieController {
 
     @DeleteMapping("{id}")
     ResponseEntity<Movie> delete(@PathVariable final int id) {
-        if(null == movieRepository.findOne(id))
+
+        if(null == movieRepository.findOne(id)){
             return ResponseEntity.notFound().build();
+        }
 
         movieRepository.delete(id);
         return ResponseEntity.accepted().build();

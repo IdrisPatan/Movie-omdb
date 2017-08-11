@@ -10,7 +10,7 @@ const Movie = (props) => {
             <p>{props.movie.Title}</p>
             <p>{props.movie.Year}</p>
             <img alt="movie poster" src={props.movie.Poster} height="50px"/>
-            <button onClick = {(event) => props.movieClickAction(props.movie)}>Save</button>
+            <button onClick = {(event) => props.movieClickAction(props.movie)}>{props.buttonText}</button>
         </div>
         );
 };

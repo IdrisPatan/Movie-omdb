@@ -7,7 +7,7 @@ import Axios from "axios";
 
 
 const API_KEY = "c5a8df09&s";
-const OMDB_BASE_URL = 'http://www.omdbapi.com/?apikey=' + API_KEY + '=';
+const OMDB_BASE_URL = `http://www.omdbapi.com/?apikey=${API_KEY}=`;
 const SPRING_API_ENDPOINT = "http://localhost:8080/";
 
 class App extends Component {
@@ -18,7 +18,7 @@ class App extends Component {
         this.state = {
             searchField: "",
             searchedMoviesList: [],
-            savedMoviesList: [],
+            savedMoviesList: []
         };
 
         this.getMoviesOmdb = this.getMoviesOmdb.bind(this);
@@ -26,6 +26,8 @@ class App extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.onSave = this.onSave.bind(this);
         this.onList = this.onList.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+        this.onList();
     }
 
     onInputChange(event){
@@ -52,11 +54,11 @@ class App extends Component {
     }
 
 
-    onSave(movieToSave) {
+    onSave(movie) {
         Axios.post(SPRING_API_ENDPOINT, {
-            title: movieToSave.Title,
-            year: movieToSave.Year,
-            poster: movieToSave.Poster})
+            title: movie.Title,
+            year: movie.Year,
+            poster: movie.Poster})
             .then(() => this.onList())
             .catch(error => console.log(error.message));
     }
@@ -68,6 +70,7 @@ class App extends Component {
 
                 const convertObjectNames = result.data.map(movie => {
                     return {
+                        Id: movie.id,
                         Title: movie.title,
                         Year: movie.year,
                         Poster: movie.poster
@@ -79,6 +82,12 @@ class App extends Component {
             .catch(error => console.log(error));
     }
 
+    onDelete(movie) {
+        Axios.delete(`${SPRING_API_ENDPOINT}${movie.Id}`)
+            .then(()=> this.onList())
+            .catch(error => console.log(error));
+    }
+
 
     render() {
         return (
@@ -86,7 +95,7 @@ class App extends Component {
               <h1>Movie Database Explorer</h1>
               <SearchBox getMovies = {this.getMoviesOmdb} clearMovies={this.clearSearchedMovieList} onChange={this.onInputChange}/>
               <SearchedMovieList moviesData={this.state.searchedMoviesList} onSave = {this.onSave}/>
-              <SavedMovieList saveMovie={this.onSave} savedMovies={this.state.savedMoviesList}/>
+              <SavedMovieList deleteMovie={this.onDelete} saveMovie={this.onSave} savedMovies={this.state.savedMoviesList}/>
           </div>
         );
     }
