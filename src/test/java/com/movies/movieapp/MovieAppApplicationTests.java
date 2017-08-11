@@ -50,7 +50,7 @@ public class MovieAppApplicationTests {
     public void returnsListOfMoviesIfRepositoryNotEmpty() throws Exception {
         Movie anyMovie = new Movie();
         anyMovie.setTitle("Batman");
-        anyMovie.setPosterUrl("google.com");
+        anyMovie.setPoster("google.com");
         anyMovie.setYear("2003");
 
 

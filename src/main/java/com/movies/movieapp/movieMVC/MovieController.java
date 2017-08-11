@@ -1,6 +1,9 @@
 package com.movies.movieapp.movieMVC;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.ConstraintViolationException;
+
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -18,7 +21,13 @@ public class MovieController {
 
     @PostMapping
     ResponseEntity<Movie> create(@RequestBody final Movie movie){
-        return new ResponseEntity<>(movieRepository.save(movie), CREATED);
+
+        try {
+            return new ResponseEntity<>(movieRepository.save(movie), CREATED);
+        }catch(ConstraintViolationException e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping

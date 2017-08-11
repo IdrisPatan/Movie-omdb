@@ -18,13 +18,14 @@ class App extends Component {
         this.state = {
             searchField: "",
             searchedMoviesList: [],
-            savedMoviesList: []
+            savedMoviesList: [],
         };
 
         this.getMoviesOmdb = this.getMoviesOmdb.bind(this);
         this.clearSearchedMovieList = this.clearSearchedMovieList.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
         this.onSave = this.onSave.bind(this);
+        this.onList = this.onList.bind(this);
     }
 
     onInputChange(event){
@@ -40,7 +41,6 @@ class App extends Component {
             .then(response => response.json())
             .then(response => {
                 this.setState({searchedMoviesList: response.Search, searchField: ''})
-
             })
     }
 
@@ -56,14 +56,27 @@ class App extends Component {
         Axios.post(SPRING_API_ENDPOINT, {
             title: movieToSave.Title,
             year: movieToSave.Year,
-            posterUrl: movieToSave.Poster})
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
+            poster: movieToSave.Poster})
+            .then(() => this.onList())
+            .catch(error => console.log(error.message));
     }
 
 
     onList() {
+        Axios.get(SPRING_API_ENDPOINT)
+            .then(result => {
 
+                const convertObjectNames = result.data.map(movie => {
+                    return {
+                        Title: movie.title,
+                        Year: movie.year,
+                        Poster: movie.poster
+                    }
+                });
+
+                this.setState({savedMoviesList: convertObjectNames})
+            })
+            .catch(error => console.log(error));
     }
 
 
@@ -73,7 +86,7 @@ class App extends Component {
               <h1>Movie Database Explorer</h1>
               <SearchBox getMovies = {this.getMoviesOmdb} clearMovies={this.clearSearchedMovieList} onChange={this.onInputChange}/>
               <SearchedMovieList moviesData={this.state.searchedMoviesList} onSave = {this.onSave}/>
-              <SavedMovieList saveMovie={this.onSave} savedMovies = {this.state.savedMoviesList}/>
+              <SavedMovieList saveMovie={this.onSave} savedMovies={this.state.savedMoviesList}/>
           </div>
         );
     }

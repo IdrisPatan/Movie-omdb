@@ -10,7 +10,7 @@ const SearchedMovieList = (props) => {
         {props.moviesData.map(film => {
             return (
                 <div key = {film.imdbID}>
-                    <Movie saveMovie={props.onSave} searchMovie={film}/>
+                    <Movie movieClickAction={props.onSave} movie={film}/>
                 </div>
                     )
         })}

@@ -19,7 +19,7 @@ public final class Movie {
     private String year;
 
     @NotNull
-    private String posterUrl;
+    private String poster;
 
 
     public int getId() {
@@ -42,11 +42,11 @@ public final class Movie {
         this.year = year;
     }
 
-    public String getPosterUrl() {
-        return posterUrl;
+    public String getPoster() {
+        return poster;
     }
 
-    public void setPosterUrl(String posterUrl) {
-        this.posterUrl = posterUrl;
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 }

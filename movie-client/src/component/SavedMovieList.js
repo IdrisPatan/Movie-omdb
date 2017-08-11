@@ -5,13 +5,20 @@ import Movie from './Movie';
 
 
 const SavedMovieList = (props) => {
+
+    if (!props.savedMovies){
+        return (
+            <div>Loading...</div>
+        );
+    }
+
     return (
         <div className="savedMovieContainer">
             <h1>Saved Movies</h1>
-            {props.savedMovies.map((film) => {
+            {props.savedMovies.map(film => {
                 return (
                     <div key={film.id}>
-                        <Movie saveMovie={props.saveMovie} movie={film}/>
+                        <Movie movie={film} movieClickAction = {()=> console.log("need to implement delete functionality")} />
                     </div>
                 )
             })}
